@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version: 2
+final_space: true
+console_title_template: "{{ .Shell }} in {{ .Folder }}"
+palette:
+  light-red: "#D46161"
+  cream: "#FFFDD0"
+blocks:
+- type: prompt
+  alignment: left
+  newline: true
+  segments:
+  - type: path
+    style: plain
+    template: "{{ .Path }}"
+    foreground: "p:light-red"
+    background: "transparent"
+    properties:
+      style: full
+- type: prompt
+  alignment: left
+  newline: true
+  segments:
+  - type: text
+    style: plain
+    foreground: "p:cream"
+    background: transparent
+    template: ❯
+
+transient_prompt:
+  foreground_templates:
+    - "{{if gt .Code 0}}red{{end}}"
+    - "{{if eq .Code 0}}p:cream{{end}}"
+  background: "transparent"
+  template: "❯ {{if gt .Code 0}}x {{end}}"
+
+secondary_prompt:
+  foreground: "p:cream"
+  background: "transparent"
+  template: "❯❯ "
