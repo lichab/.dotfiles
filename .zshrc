@@ -71,3 +71,4 @@ export NVM_DIR="$HOME/.nvm"
 #Sdkman manages java versions
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
