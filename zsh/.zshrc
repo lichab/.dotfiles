@@ -52,9 +52,6 @@ bindkey "^[[B" history-search-forward
 
 alias ls="eza --color=always --group-directories-first"
 
-alias cd="z"
-eval "$(zoxide init zsh)"
-
 ## NVIM alias and default editor
 alias vi="nvim"
 alias vim="nvim"
@@ -66,9 +63,4 @@ export EDITOR=nvim
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#This must be at the end of the file for sdkman to work
-#Sdkman manages java versions
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 

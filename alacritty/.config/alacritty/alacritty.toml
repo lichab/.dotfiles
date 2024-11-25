@@ -2,7 +2,7 @@ import = [
   "~/.config/alacritty/colorschemes/rose-pine.toml"
 ]
 [env]
-TERM = "xterm-256color"
+## TERM = "xterm-256color"
 [window]
 padding.x = 4
 padding.y = 4
