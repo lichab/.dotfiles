@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 -- For example, changing the color scheme:
 config.color_scheme = "Rouge 2"
 config.font = wezterm.font("JetBrains Mono")
-config.window_background_image = "/home/lisandro/Downloads/gojo.png"
+config.window_background_image = "/Users/lisandrobertoli/gojo.png"
 
 config.window_background_image_hsb = {
 	-- Darken the background image
