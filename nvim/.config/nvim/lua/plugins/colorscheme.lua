@@ -2,7 +2,9 @@ return {
     'rose-pine/neovim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-        require('rose-pine').setup {
+        local rose = require 'rose-pine'
+
+        rose.setup {
             styles = {
                 bold = true,
                 italic = false,
