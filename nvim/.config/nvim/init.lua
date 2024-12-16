@@ -57,7 +57,8 @@ vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Open LSP [C
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Navigation keymaps
-vim.keymap.set('n', '<leader>e', '<cmd>:lua MiniFiles.open()<CR>', { desc = 'Open file explorer in new buffer' })
+vim.keymap.set('n', '<leader>ve', '<cmd>vertical topleft Oil<CR>', { desc = 'Open file explorer vertically' })
+vim.keymap.set('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open file explorer in new buffer' })
 
 --  Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
