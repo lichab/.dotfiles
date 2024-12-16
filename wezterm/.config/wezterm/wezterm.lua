@@ -8,6 +8,7 @@ local config = wezterm.config_builder()
 config.color_scheme = "Rouge 2"
 config.font = wezterm.font("JetBrains Mono")
 config.window_background_image = "/Users/lisandrobertoli/gojo.png"
+config.max_fps = 240
 
 config.window_background_image_hsb = {
 	-- Darken the background image
