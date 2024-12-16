@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+echo "============ Installing Stow ============" 
+brew install stow
+echo "============ Stow Installed! ============" 
+
+echo "============ Installing FZF ============" 
+brew install fzf
+echo "============ FZF Installed! ============" 
+
+echo "============ Installing LazyGit ============" 
+brew install lazygit
+echo "============ LazyGit Installed! ============" 
+
+echo "============ Installing Zoxide ============" 
+brew install zoxide
+echo "============ Zoxide Installed! ============" 
+
+echo "============ Installing TLDR ============" 
+brew install tlrc
+echo "============ TLDR Installed ============" 
+
+echo "============ Installing Exa ============" 
+brew install exa
+echo "============ Exa Installed! ============" 
+
+echo "============ Installing RipGrep ============" 
+brew install ripgrep
+echo "============ RipGrep Installed! ============" 
+
+echo "============ Installing LazyDocker ============" 
+brew install lazydocker
+echo "============ LazyDocker Installed! ============" 
+
+echo "============ Installing K9S ============" 
+brew install derailed/k9s/k9s
+echo "============ K9S Installed! ============" 
+
+echo "============ Installing Tmux ============" 
+brew install tmux
+echo "============ Tmux Installed! ============" 

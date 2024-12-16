@@ -1,0 +1,13 @@
+!#/usr/bin/env bash
+
+echo "============ Installing Wezterm ============" 
+brew install --cask wezterm
+echo "============ Wezterm Installed! ============" 
+
+
+echo "============ Installing PowerLevel10k ============" 
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source $HOME/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zshrc
+echo "============ Wezterm Installed! ============" 
+
+
