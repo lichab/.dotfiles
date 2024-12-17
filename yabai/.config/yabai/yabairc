@@ -1,3 +1,35 @@
+# desktop space label
+yabai -m space 1 --label terminal
+yabai -m space 2 --label web
+yabai -m space 3 --label misc
+yabai -m space 4 --label mail
+yabai -m space 5 --label na
+yabai -m space 6 --label na
+yabai -m space 7 --label slack
+yabai -m space 8 --label finder
+yabai -m space 9 --label Audio
+
+# window rules
+yabai -m rule --add app="^Arc$" space=web
+yabai -m rule --add app="^iTerm$" space=terminal
+##yabai -m rule --add app="^Obsidian$" space=notes
+yabai -m rule --add app="^Mail$" space=mail
+yabai -m rule --add app="^Slack$" space=slack
+#yabai -m rule --add app="^WezTerm$" space=terminal
+#yabai -m rule --add app="^Brave Browser$" space=brave
+#yabai -m rule --add app="^Telegram$" space=telegram
+#yabai -m rule --add app="^Obs$" space=obs
+
+# window signal events
+yabai -m signal --add event=window_created app="^iTerm$" action="yabai -m space --focus terminal"
+yabai -m signal --add event=window_created app="^Arc$" action="yabai -m space --focus web"
+yabai -m signal --add event=window_created app="^Mail$" action="yabai -m space --focus mail"
+yabai -m signal --add event=window_created app="^Slack$" action="yabai -m space --focus slack"
+#yabai -m signal --add event=window_created app="^Discord$" action="yabai -m space --focus social"
+#yabai -m signal --add event=window_created app="^Godot$" action="yabai -m space --focus godot"
+#yabai -m signal --add event=window_created app="^Telegram$" action="yabai -m space --focus telegram"
+#yabai -m signal --add event=window_created app="^Obs$" action="yabai -m space --focus obs"
+
 yabai -m config layout bsp
 yabai -m config window_placement second_child
 
@@ -25,4 +57,8 @@ yabai -m mouse_drop_action swap
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
+yabai -m rule --add app="^Raycast Settings$" manage=off
 
+
+
+borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &
