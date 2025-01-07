@@ -1,19 +1,11 @@
 return {
-    'rose-pine/neovim',
+    'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-        local rose = require 'rose-pine'
-
-        rose.setup {
-            styles = {
-                bold = true,
-                italic = false,
-                transparency = false,
-            },
-        }
-    end,
+    opts = {
+        theme = 'dragon',
+    },
     init = function()
-        vim.cmd.colorscheme 'rose-pine'
+        vim.cmd.colorscheme 'kanagawa'
 
         vim.cmd.hi 'Comment gui=none'
     end,
