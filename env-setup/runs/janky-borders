@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-echo "================== Installing JankyBorders =================="
-brew tap FelixKratz/formulae
-brew install borders
-echo "================== JankyBorders Installed =================="

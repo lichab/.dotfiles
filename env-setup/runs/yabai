@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-echo "================== Installing Yabai =================="
-brew install koekeishiya/formulae/yabai
-echo "================== Yabai Installed =================="
-
-

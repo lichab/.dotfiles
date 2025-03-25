@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo "============ Installing Wezterm ============" 
-brew install --cask wezterm
-echo "============ Wezterm Installed! ============" 
+echo "============ Installing Ghostty ============" 
+brew install --cask ghostty
+echo "============ Ghostty Installed! ============" 
 
 
 echo "============ Installing PowerLevel10k ============" 
