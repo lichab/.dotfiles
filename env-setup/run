@@ -31,13 +31,13 @@ execute() {
 		return
 	fi
 
-	echo "$@"
+	"$@"
 }
 
 log "$script_dir -- $filter"
 cd $script_dir
 
-scripts=$(find ./runs -maxdepth 1 -mindepth 1 -perm +111 -type f)
+scripts=$(find $script_dir/runs -maxdepth 1 -mindepth 1 -perm +111 -type f)
 
 for script in $scripts; do
 	if echo "$script" | grep -qv "$filter"; then
@@ -45,5 +45,5 @@ for script in $scripts; do
 		continue
 	fi
 
-	execute ./$script
+	execute $script
 done
