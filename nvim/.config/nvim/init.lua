@@ -12,6 +12,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = 'auto'
+vim.opt.columns = 160
 vim.opt.showmode = false
 vim.opt.breakindent = true
 
