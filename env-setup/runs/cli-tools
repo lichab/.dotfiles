@@ -20,9 +20,9 @@ echo "============ Installing TLDR ============"
 brew install tlrc
 echo "============ TLDR Installed ============" 
 
-echo "============ Installing Exa ============" 
-brew install exa
-echo "============ Exa Installed! ============" 
+echo "============ Installing Eza ============" 
+brew install eza
+echo "============ Eza Installed! ============" 
 
 echo "============ Installing RipGrep ============" 
 brew install ripgrep
