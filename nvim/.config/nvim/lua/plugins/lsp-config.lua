@@ -93,6 +93,7 @@ return { -- LSP Configuration & Plugins
             -- But for many setups, the LSP (`tsserver`) will work just fine
             ts_ls = {},
             --
+            intelephense = {},
 
             lua_ls = {
                 -- cmd = {...},
