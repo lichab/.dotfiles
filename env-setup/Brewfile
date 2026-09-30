@@ -8,6 +8,7 @@ brew "stow"
 brew "mise"
 brew "neovim"
 brew "tmux"
+brew "go"
 
 # CLI
 brew "eza"
@@ -19,6 +20,7 @@ brew "lazygit"
 brew "zoxide"
 brew "wget"
 brew "gitleaks"
+brew "tree-sitter-cli" # nvim-treesitter compiles parsers with it
 brew "herdr"
 
 # Build tools (also needed to build neovim from source)
