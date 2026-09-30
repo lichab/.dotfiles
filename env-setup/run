@@ -75,10 +75,13 @@ if ! command -v brew >/dev/null; then
 	load_brew
 fi
 
+# A single failing package shouldn't stop the rest of the setup; report it at the end.
+failed=()
+
 step "Packages"
-run brew bundle --file="$SETUP_DIR/Brewfile"
+run brew bundle --file="$SETUP_DIR/Brewfile" || failed+=("Brewfile")
 if [[ $promo == 1 ]]; then
-	run brew bundle --file="$SETUP_DIR/Brewfile.promo"
+	run brew bundle --file="$SETUP_DIR/Brewfile.promo" || failed+=("Brewfile.promo")
 fi
 
 step "Dotfiles"
@@ -105,6 +108,11 @@ fi
 if [[ "$(uname -s)" == Linux ]]; then
 	echo
 	echo "Linux: install Ghostty and a Nerd Font (JetBrains Mono) with your distro's package manager."
+fi
+
+if ((${#failed[@]})); then
+	step "Finished with errors in: ${failed[*]} (see the brew bundle output above and re-run)"
+	exit 1
 fi
 
 step "Done. Open a new terminal."
