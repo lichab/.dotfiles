@@ -46,7 +46,19 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
         -- setting the keybinding for LazyGit with 'keys' is recommended in
         -- order to load the plugin when the command is run for the first time
         keys = {
-            { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+            {
+                '<leader>lg',
+                -- Open the repo of the current file (or Oil dir), not Neovim's cwd,
+                -- so it works when Neovim was started in a folder that holds several repos
+                function()
+                    local dir = vim.fn.expand '%:p:h'
+                    if vim.bo.filetype == 'oil' then
+                        dir = require('oil').get_current_dir() or dir
+                    end
+                    require('lazygit').lazygit(vim.fs.root(dir, '.git'))
+                end,
+                desc = 'LazyGit (repo of current file)',
+            },
         },
     },
 }
