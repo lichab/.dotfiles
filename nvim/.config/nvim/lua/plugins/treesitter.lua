@@ -31,12 +31,19 @@ return { -- Highlight, edit, and navigate code
             'dockerfile',
             'gitcommit',
             'diff',
+            'graphql',
         }
 
         -- Start treesitter highlighting and indentation for any filetype with a parser,
         -- installing missing parsers on demand (like the old `auto_install`).
         local function start(buf, lang)
-            if not vim.api.nvim_buf_is_valid(buf) or not pcall(vim.treesitter.start, buf, lang) then
+            -- A parser without highlight queries (e.g. a stale one on the runtimepath) counts as missing
+            -- (looked up on disk: vim.treesitter.query.get caches a miss, even after installing)
+            local has_query = #vim.api.nvim_get_runtime_file('queries/' .. lang .. '/highlights.scm', false) > 0
+            if not vim.api.nvim_buf_is_valid(buf) or not has_query then
+                return false
+            end
+            if not pcall(vim.treesitter.start, buf, lang) then
                 return false
             end
             vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
