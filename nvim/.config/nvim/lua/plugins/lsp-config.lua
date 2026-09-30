@@ -63,7 +63,19 @@ return {
             -- See `:help lspconfig-all` for the available servers.
             local servers = {
                 gopls = {},
-                ts_ls = {},
+                -- vue_ls (v3) delegates TypeScript to ts_ls, which needs the Vue plugin and .vue files
+                ts_ls = {
+                    init_options = {
+                        plugins = {
+                            {
+                                name = '@vue/typescript-plugin',
+                                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                                languages = { 'vue' },
+                            },
+                        },
+                    },
+                    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+                },
                 intelephense = {},
                 vue_ls = {},
                 eslint = {},
