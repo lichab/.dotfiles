@@ -1,0 +1,37 @@
+# Shared tools for every machine (macOS + Linux).
+# Casks only exist on macOS, so they live inside `if OS.mac?`.
+
+# Core
+brew "git"
+brew "gh"
+brew "stow"
+brew "mise"
+brew "neovim"
+brew "tmux"
+
+# CLI
+brew "eza"
+brew "fd"
+brew "fzf"
+brew "ripgrep"
+brew "jq"
+brew "lazygit"
+brew "zoxide"
+brew "wget"
+brew "gitleaks"
+brew "herdr"
+
+# Build tools (also needed to build neovim from source)
+brew "cmake"
+brew "ninja"
+brew "automake"
+brew "pkgconf"
+brew "intltool"
+brew "gtk+"
+
+if OS.mac?
+  cask "ghostty"
+  cask "rectangle"
+  cask "postman"
+  cask "font-jetbrains-mono-nerd-font"
+end

@@ -1,49 +1,110 @@
 #!/usr/bin/env bash
+# Bootstrap a machine from these dotfiles (macOS or Linux).
+#
+#   ./run            shared setup (personal machine)
+#   ./run --promo    shared + Promofarma-only tools and config
+#   ./run --dry      print what would run, change nothing
+#
+# Safe to re-run: brew bundle, stow --restow and mise install are idempotent.
+set -euo pipefail
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-filter=""
-dry=""
+SETUP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES="$(dirname "$SETUP_DIR")"
+PACKAGES=(zsh nvim tmux ghostty powerlevel10k mise)
+PROMO_PACKAGES=(mise-promo)
 
-while [[ $# > 0 ]]; do
-	if [[ $1 == "--dry" ]] 
-	then
-		dry="1"
-	else
-		filter="$1"
-	fi
-	shift
+promo=0
+dry=0
+for arg in "$@"; do
+	case $arg in
+		--promo) promo=1 ;;
+		--dry) dry=1 ;;
+		*) echo "usage: ./run [--promo] [--dry]" >&2; exit 1 ;;
+	esac
 done
 
-log(){
-	if [[ $dry == "1" ]] 
-	then
-		echo "[DRY_RUN]: $@"
-	else
-		echo "$@"
-	fi
+step() { printf '\n==> %s\n' "$*"; }
+
+run() {
+	echo "+ $*"
+	[[ $dry == 1 ]] || "$@"
 }
 
-
-execute() {
-	log "execute $@"
-	if [[ $dry == "1" ]] 
-	then
-		return
-	fi
-
-	"$@"
+load_brew() {
+	local b
+	for b in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+		if [[ -x $b ]]; then
+			eval "$("$b" shellenv)"
+			return
+		fi
+	done
 }
 
-log "$script_dir -- $filter"
-cd $script_dir
+# Move real files that would block stow out of the way (fresh machines ship a default ~/.zshrc).
+backup_conflicts() {
+	local pkg file target
+	for pkg in "$@"; do
+		while IFS= read -r file; do
+			target="$HOME/${file#./}"
+			# Skip anything that already resolves into the repo (e.g. via a symlinked parent dir)
+			if [[ -e $target && "$(realpath "$target")" != "$DOTFILES"/* ]]; then
+				run mv "$target" "$target.pre-dotfiles"
+			fi
+		done < <(cd "$DOTFILES/$pkg" && find . -type f)
+	done
+}
 
-scripts=$(find $script_dir/runs -maxdepth 1 -mindepth 1 -perm +111 -type f)
+step "Prerequisites"
+case "$(uname -s)" in
+	Darwin)
+		xcode-select -p >/dev/null 2>&1 || run xcode-select --install
+		;;
+	Linux)
+		if command -v apt-get >/dev/null; then
+			run sudo apt-get update
+			run sudo apt-get install -y build-essential curl file git procps zsh
+		else
+			echo "Install build tools, curl, git and zsh with your package manager, then re-run." >&2
+		fi
+		;;
+esac
 
-for script in $scripts; do
-	if echo "$script" | grep -qv "$filter"; then
-		log "filtering $script"
-		continue
-	fi
+load_brew
+if ! command -v brew >/dev/null; then
+	run /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	load_brew
+fi
 
-	execute $script
-done
+step "Packages"
+run brew bundle --file="$SETUP_DIR/Brewfile"
+if [[ $promo == 1 ]]; then
+	run brew bundle --file="$SETUP_DIR/Brewfile.promo"
+fi
+
+step "Dotfiles"
+packages=("${PACKAGES[@]}")
+if [[ $promo == 1 ]]; then
+	packages+=("${PROMO_PACKAGES[@]}")
+fi
+backup_conflicts "${packages[@]}"
+run stow --dir="$DOTFILES" --target="$HOME" --restow "${packages[@]}"
+
+step "Runtimes (mise)"
+run mise install
+
+if [[ $promo == 1 && ! -d $HOME/.maestro ]]; then
+	step "Maestro"
+	run /bin/bash -c "curl -fsSL https://get.maestro.mobile.dev | bash"
+fi
+
+if [[ "$(basename "${SHELL:-}")" != zsh ]]; then
+	step "Default shell"
+	run chsh -s "$(command -v zsh)"
+fi
+
+if [[ "$(uname -s)" == Linux ]]; then
+	echo
+	echo "Linux: install Ghostty and a Nerd Font (JetBrains Mono) with your distro's package manager."
+fi
+
+step "Done. Open a new terminal."

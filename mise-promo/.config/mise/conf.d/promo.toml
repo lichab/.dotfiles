@@ -1,0 +1,3 @@
+# Promofarma-only tools (stowed with `./run --promo`)
+[tools]
+"npm:snyk" = "latest"

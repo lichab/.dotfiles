@@ -1,0 +1,25 @@
+# Promofarma-only tools. Installed with `./run --promo`.
+
+brew "awscli"
+brew "glab"
+brew "helm"
+brew "kubectx"
+brew "mongosh"
+brew "mysql@8.0"
+brew "php"
+brew "redis"
+brew "dnsmasq"
+brew "watchman"
+brew "yarn"
+brew "python@3.11"
+brew "pipx"
+brew "git-secrets"
+
+if OS.mac?
+  brew "cocoapods"
+  brew "ios-deploy"
+  cask "aws-vault-binary"
+  cask "gcloud-cli"
+  cask "flipper"
+  cask "openlens"
+end
