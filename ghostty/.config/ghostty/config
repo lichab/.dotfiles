@@ -1,7 +1,21 @@
-keybind = cmd+shift>r=reload_config
-theme = rose-pine 
-background = #000000
+keybind = cmd+shift+r=reload_config
 gtk-single-instance = true
 
+# Catppuccin Macchiato theme for bright rooms
+theme = Vesper
+
+# Boost font weight (Thinner fonts "disappear" in glare)
+font-family = "JetBrains Mono" # Or your favorite coding font
+font-style = bold
+font-size = 13
+
+# Crucial for bright rooms: Disable transparency
+# Reflections are worse when the background isn't solid
+background-opacity = 1.0
+background-blur-radius = 0
+
+# Optional: Add a subtle border to help define the window
+window-padding-x = 10
+window-padding-y = 10
 
 
