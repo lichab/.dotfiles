@@ -59,25 +59,47 @@ export EDITOR=nvim
 
 ################# VERSION MANAGERS ################
 
-#Node version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
 # pnpm
-export PNPM_HOME="/Users/lisandrobertoli/Library/pnpm"
+export PNPM_HOME='/Users/lisandro.bertoli/Library/pnpm'
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 
-# Added by Windsurf
-export PATH="/Users/lisandrobertoli/.codeium/windsurf/bin:$PATH"
-export JAVA_HOME=/path/to/java_installation
+# bun completions
+[ -s "/Users/lisandro.bertoli/.bun/_bun" ] && source "/Users/lisandro.bertoli/.bun/_bun"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-eval "$(direnv hook $SHELL)"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(mise activate zsh)"
+
+### Promofarma exclusive conf ###
+# Android
+export PATH=~/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+
+# Google Cloud SDK
+[ -f "$HOME/google-cloud-sdk/path.zsh.inc" ] && source "$HOME/google-cloud-sdk/path.zsh.inc"
+[ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ] && source "$HOME/google-cloud-sdk/completion.zsh.inc"
+
+# AWS
+export AWS_SESSION_TOKEN_TTL=12h
+export AWS_CHAINED_SESSION_TOKEN_TTL=12h
+export AWS_MFA_SERIAL=arn:aws:iam::485220025793:mfa/lisandro.bertoli-phone
+
+# Jira
+export JIRA_BASE_URL="https://docmorrisgroup.atlassian.net"
+export JIRA_EMAIL="lisandro.bertoli2@promocionesfarma.com"
+
+# Tools
+export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+export PATH=$PATH:$HOME/.maestro/bin
+### end Promofarma ###
+
+# Secrets (not versioned)
+[ -f "$HOME/.secrets.zsh" ] && source "$HOME/.secrets.zsh"
