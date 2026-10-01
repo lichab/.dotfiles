@@ -55,19 +55,26 @@ return { -- Fuzzy Finder (files, lsp, etc)
         local builtin = require 'telescope.builtin'
 
         -- Run a picker from the project (git repo) of the current buffer instead of Neovim's cwd
-        local in_project = function(picker)
+        local in_project = function(picker, opts)
             return function()
-                picker { cwd = require('project').root() }
+                picker(vim.tbl_extend('force', { cwd = require('project').root() }, opts or {}))
             end
         end
 
+        -- Find files and grep also cover dotfiles and gitignored files (e.g. .env), minus heavy/generated dirs
+        local rg_args = { '--hidden', '--no-ignore' }
+        for _, dir in ipairs { '.git', 'node_modules', 'vendor', 'dist', 'build', 'coverage', '.next', '.nuxt', '.turbo', '.cache', '.idea', '.husky/_', 'var' } do
+            vim.list_extend(rg_args, { '--glob', '!**/' .. dir .. '/**' })
+        end
+        local find_command = vim.list_extend({ 'rg', '--files' }, rg_args)
+
         vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
         vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        vim.keymap.set('n', '<leader>sf', in_project(builtin.find_files), { desc = '[S]earch [F]iles' })
+        vim.keymap.set('n', '<leader>sf', in_project(builtin.find_files, { find_command = find_command }), { desc = '[S]earch [F]iles' })
         vim.keymap.set('n', '<leader>sv', in_project(builtin.git_files), { desc = '[S]earch [V]ersioned [F]iles' })
         vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-        vim.keymap.set('n', '<leader>sw', in_project(builtin.grep_string), { desc = '[S]earch current [W]ord' })
-        vim.keymap.set('n', '<leader>sg', in_project(builtin.live_grep), { desc = '[S]earch by [G]rep' })
+        vim.keymap.set('n', '<leader>sw', in_project(builtin.grep_string, { additional_args = rg_args }), { desc = '[S]earch current [W]ord' })
+        vim.keymap.set('n', '<leader>sg', in_project(builtin.live_grep, { additional_args = rg_args }), { desc = '[S]earch by [G]rep' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
