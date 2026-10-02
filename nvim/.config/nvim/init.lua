@@ -67,6 +67,12 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- System clipboard: y/p stay internal to Neovim, <leader>y/p go through the macOS clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Copy to system clipboard' })
+vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Copy to end of line to system clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Paste from system clipboard after cursor' })
+vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Paste from system clipboard before cursor' })
+
 -- Navigation keymaps
 vim.keymap.set('n', '<leader>ve', '<cmd>vertical topleft Oil<CR>', { desc = 'Open file explorer vertically' })
 vim.keymap.set('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open file explorer in new buffer' })
